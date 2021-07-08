@@ -34,10 +34,22 @@ fn dvds_from_file(f: &String) -> Dvd {
 }
 
 fn main() {
-    let a = Dvd {
-        name: String::from("Four Weddings and a Funeral"),
-        year: 1994,
-        cast: String::from("Hugh Grant"),
-        lenght: 117,
-    };
+    let rawdata = r#"{
+        "name": "La La Land",
+        "year": 2016,
+        "cast": "Emma Stone, Ryan Goling",
+        "lenght": 128
+    }"#;
+
+    let mut d: Dvd = json_from_str(rawdata);
+
+    let encoded = str_from_json(&d);
+
+    println!("{}", encoded);
+
+    let filename = String::from("file.json");
+    dvds_to_file(&filename, d);
+
+    d = dvds_from_file(&filename);
+    println!("{}", str_from_json(&d));
 }
